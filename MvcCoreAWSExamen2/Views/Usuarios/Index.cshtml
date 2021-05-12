@@ -1,0 +1,24 @@
+﻿@model List<Usuario>
+
+    <a asp-action="create" asp-controller="usuarios">crear usuario</a>
+
+    @if (Model != null)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    @foreach (Usuario usu in Model)
+                    {
+                        <td> @usu.Nombre
+                            <a class="btn btn-info" asp-action="details" asp-route-id="@usu.IdUsuario">Detalles</a>
+                        </td>
+                    }
+                </tr>
+            </tbody>
+        </table>
+    }

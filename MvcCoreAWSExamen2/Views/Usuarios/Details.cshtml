@@ -1,0 +1,15 @@
+﻿@model Usuario
+
+<div class="card">
+    <div class="card-body">
+        <h3>@Model.Nombre</h3>
+        <p>@Model.Descripcion</p>
+    </div>
+</div>
+<div>
+    @foreach (Foto f in Model.Fotos)
+    {
+        <h4>@f.Titulo</h4>
+        <img src="@f.Imagen" style="width:120px;" />
+    }
+</div>

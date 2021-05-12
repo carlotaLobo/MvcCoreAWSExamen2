@@ -24,15 +24,16 @@ namespace MvcCoreAWSExamen2.Controllers
         {
             return View(await this.servicedynamo.GetUsuarios());
         }
-        public async Task<IActionResult> Details(int idusuario)
+        public async Task<IActionResult> Details(int id)
         {
-            return View(await this.servicedynamo.GetUsuario(idusuario));
+            return View(await this.servicedynamo.GetUsuario(id));
         }
-        [HttpPost]
+       
         public IActionResult Create()
         {
             return View();
         }
+        [HttpPost]
         public async Task<IActionResult> Create(String masinfo, Usuario usuario, List<IFormFile> foto, String titulo)
         {
             if (masinfo != null)
