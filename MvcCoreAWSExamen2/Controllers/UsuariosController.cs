@@ -34,7 +34,7 @@ namespace MvcCoreAWSExamen2.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(String masinfo, Usuario usuario, List<IFormFile> foto, String titulo)
+        public async Task<IActionResult> Create(String masinfo, Usuario usuario, List<IFormFile> foto, List<String> titulo)
         {
             if (masinfo != null)
             {
@@ -49,7 +49,7 @@ namespace MvcCoreAWSExamen2.Controllers
                             foto[i].CopyTo(m);
                             await this.services3.UploadFile(m, foto[i].FileName);
                         }
-                        usuario.Fotos.Add(new Foto { Titulo = titulo, Imagen = this.services3.GetUrlFile(foto[i].FileName) });
+                        usuario.Fotos.Add(new Foto { Titulo = titulo[i], Imagen = this.services3.GetUrlFile(foto[i].FileName) });
                     }
 
                 }
@@ -58,10 +58,10 @@ namespace MvcCoreAWSExamen2.Controllers
 
             return RedirectToAction("index");
         }
-        public async Task<IActionResult> Delete(int idusuario)
+        public async Task<IActionResult> Delete(int id)
         {
-            await this.servicedynamo.Delete(idusuario);
-            Usuario usu = await this.servicedynamo.GetUsuario(idusuario);
+           
+            Usuario usu = await this.servicedynamo.GetUsuario(id);
             if (usu.Fotos.Count > 0)
             {
                 foreach (Foto u in usu.Fotos)
@@ -70,7 +70,7 @@ namespace MvcCoreAWSExamen2.Controllers
                     await this.services3.DeleteFile(imagen);
                 }
             }
-
+            await this.servicedynamo.Delete(id);
             return RedirectToAction("index");
         }
     }

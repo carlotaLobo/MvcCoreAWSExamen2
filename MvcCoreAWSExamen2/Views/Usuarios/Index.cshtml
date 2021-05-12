@@ -14,9 +14,11 @@
                 <tr>
                     @foreach (Usuario usu in Model)
                     {
-                        <td> @usu.Nombre
-                            <a class="btn btn-info" asp-action="details" asp-route-id="@usu.IdUsuario">Detalles</a>
-                        </td>
+                    <td>
+                        @usu.Nombre
+                        <a class="btn btn-info" asp-action="details" asp-route-id="@usu.IdUsuario">Detalles</a>
+                        <a class="btn btn-danger" asp-action="delete" asp-route-id="@usu.IdUsuario">Delete</a>
+                    </td>
                     }
                 </tr>
             </tbody>
