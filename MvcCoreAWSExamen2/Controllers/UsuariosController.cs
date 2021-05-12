@@ -84,28 +84,35 @@ namespace MvcCoreAWSExamen2.Controllers
             {
                 if (foto != null)
                 {
-                    if (u.Fotos.Count > 0) { usuario.Fotos = u.Fotos; } else { usuario.Fotos = new List<Foto>(); }
-
-
-                    for (int i = 0; i < foto.Count; i++)
+                    if (u.Fotos !=null)
                     {
-                        using (MemoryStream m = new MemoryStream())
+                        usuario.Fotos = u.Fotos;
+                    }
+                    else
+                    {
+                        usuario.Fotos = new List<Foto>();
+                    }
+
+                       for (int i = 0; i < foto.Count; i++)
                         {
-                            foto[i].CopyTo(m);
-                            await this.services3.UploadFile(m, foto[i].FileName);
+                            using (MemoryStream m = new MemoryStream())
+                            {
+                                foto[i].CopyTo(m);
+                                await this.services3.UploadFile(m, foto[i].FileName);
+                            }
+                            usuario.Fotos.Add(new Foto { Titulo = titulo[i], Imagen = this.services3.GetUrlFile(foto[i].FileName) });
                         }
-                        usuario.Fotos.Add(new Foto { Titulo = titulo[i], Imagen = this.services3.GetUrlFile(foto[i].FileName) });
                     }
                 }
-            }
-            await this.servicedynamo.Update(usuario);
 
-            return View(await this.servicedynamo.GetUsuario(usuario.IdUsuario));
-        }
-        public async Task<IActionResult> DeleteFoto(int idusuario, int posicion)
-        {
-            await this.servicedynamo.DeleteImagen(idusuario, posicion);
-            return RedirectToAction("index");
+                await this.servicedynamo.Update(usuario);
+
+                return View(await this.servicedynamo.GetUsuario(usuario.IdUsuario));
+            }
+            public async Task<IActionResult> DeleteFoto(int idusuario, int posicion)
+            {
+                await this.servicedynamo.DeleteImagen(idusuario, posicion);
+                return RedirectToAction("index");
+            }
         }
     }
-}

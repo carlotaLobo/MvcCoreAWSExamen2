@@ -54,6 +54,10 @@ namespace MvcCoreAWSExamen2.Services
         }
         public async Task Update(Usuario usuario)
         {
+            if(usuario.Fotos.Count > 0 || usuario.Fotos !=null)
+            {
+                usuario.Fotos = usuario.Fotos;
+            }
             await this.context.SaveAsync<Usuario>(usuario);
         }
         public async Task DeleteImagen(int idusuario, int posicion)

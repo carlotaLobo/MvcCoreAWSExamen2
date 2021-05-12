@@ -8,6 +8,8 @@
     </div>
 
     <div class="card-body row">
+        @if(Model.Fotos != null){
+
         @foreach (Foto f in Model.Fotos)
         {
         <div class="col col-6">
@@ -15,6 +17,8 @@
             <img src="@f.Imagen" style="width:150px;" />
         </div>
         }
+        }
+
     </div>
 </div>
 

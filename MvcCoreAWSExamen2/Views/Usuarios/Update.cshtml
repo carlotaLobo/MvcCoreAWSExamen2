@@ -16,7 +16,8 @@
 
     <br />
     <div class="card-body row">
-        @foreach (Foto f in Model.Fotos)
+        @if(Model.Fotos != null){
+        @foreach(Foto f in Model.Fotos)
         {
         <div class="col col-6">
             <h4>@f.Titulo</h4>
@@ -25,6 +26,8 @@
         </div>
             contador++;
         }
+        }
+
     </div>
     <br />
 
