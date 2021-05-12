@@ -36,7 +36,7 @@ namespace MvcCoreAWSExamen2.Services
         {
             return await this.context.LoadAsync<Usuario>(idusuario);
         }
-        public async Task<List<Usuario>> GetByNombr(String nombre)
+        public async Task<List<Usuario>> GetByNombre(String nombre)
         {
             var tabla = this.context.GetTargetTable<Usuario>();
             ScanFilter scan = new ScanFilter();
@@ -51,6 +51,18 @@ namespace MvcCoreAWSExamen2.Services
         public async Task Delete(int idusuario)
         {
             await this.context.DeleteAsync<Usuario>(idusuario);
+        }
+        public async Task Update(Usuario usuario)
+        {
+            await this.context.SaveAsync<Usuario>(usuario);
+        }
+        public async Task DeleteImagen(int idusuario, int posicion)
+        {
+
+            Usuario usu = await this.context.LoadAsync<Usuario>(idusuario);
+            usu.Fotos.Remove(usu.Fotos[posicion]);
+            await this.Update(usu);
+
         }
     }
 }

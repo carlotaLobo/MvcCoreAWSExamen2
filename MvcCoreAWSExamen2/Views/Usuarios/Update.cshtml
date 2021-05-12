@@ -1,0 +1,42 @@
+﻿@model Usuario
+@{ 
+    int contador = 0;
+}
+<h2>Actualizar usuario</h2>
+
+<form method="post" enctype="multipart/form-data">
+
+    <input type="hidden" name="idusuario" value="@Model.IdUsuario" class="form-control" />
+    <label>Nombre</label>
+    <input type="text" name="nombre" value="@Model.Nombre" class="form-control" />
+    <label>Descripcion</label>
+    <input type="text" name="descripcion" value="@Model.Descripcion" class="form-control" />
+    <label>Fecha Alta</label>
+    <input type="text" name="fechaalta" value="@Model.FechaAlta" class="form-control" />
+
+    <br />
+    <div class="card-body row">
+        @foreach (Foto f in Model.Fotos)
+        {
+        <div class="col col-6">
+            <h4>@f.Titulo</h4>
+            <img src="@f.Imagen" style="width:150px;" />
+            <a asp-action="DeleteFoto" asp-controller="usuarios" asp-route-idusuario="@Model.IdUsuario" asp-route-posicion="@contador">eliminar foto</a>
+        </div>
+            contador++;
+        }
+    </div>
+    <br />
+
+    <label> Mas información: </label>
+    <input name="masinfo" value="true" type="checkbox" />
+    <br />
+    <label>Titulo 1</label>
+    <input type="text" name="titulo" class="form-control" />
+    <label>Titulo 2</label>
+    <input type="text" name="titulo" class="form-control" />
+    <label>Foto</label>
+    <input multiple type="file" name="foto" class="form-control" />
+    <br />
+    <button class="btn btn-success" type="submit">crear</button>
+</form>
